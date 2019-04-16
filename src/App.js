@@ -1,68 +1,49 @@
 import React, { Component } from 'react';
+import { Navigator, Main } from './pages';
 import logo from './logo.svg';
-import './App.css';
-import { Authenticator, SignOut } from 'aws-amplify-react'
-import Amplify, { Hub } from 'aws-amplify';
+import {
+  Container,
+  Image,
+  List,
+  Segment,
+} from 'semantic-ui-react'
+import Amplify from 'aws-amplify';
 import aws_exports from './aws-exports';
+
 Amplify.configure(aws_exports);
 
 class App extends Component {
-  constructor() {
-    super();
-    this.state = { user: null }
-    Hub.listen('auth', (data) => {
-      const { payload } = data;
-      this.loadUser(payload.data.username,
-        payload.event);
-      console.log(data)
-      // console.log('A new auth event has happened: ',
-      //   data.payload.data.username + ' has ' + data.payload.event);
-    })
+  constructor(props) {
+    super(props);
+    this.state = { term: '', array: ['default'], activeItem: 'home' };
   }
-  setUser = (val) => {
-    this.setState({ user: val });
-  }
-
-  // onHubCapsule(capsule) {
-  //   this.loadUser();
-  // }
-
-  loadUser = (user, event) => {
-    console.log(user + event)
-    if ('signOut' === event) {
-      this.setState({ user: null });
-      return;
-    }
-    this.setState({ user: user })
-  }
-
   render() {
-    var user = this.state.user;
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {/* {this.show()} */}
-          {/* {!user && <Authenticator />} */}
-          {<Authenticator />}
-          {user && <p>You are signed in as {user} </p>}
-          {user && <SignOut />}
-        </header>
+      <div className="App" >
+        <Navigator></Navigator>
+        <Main></Main>
+        <Segment inverted vertical style={{ margin: '5em 0em 0em', padding: '5em 0em' }}>
+          <Container textAlign='center'>
+            <Image centered size='mini' src={logo} />
+            <List horizontal inverted divided link size='small'>
+              <List.Item as='a' href='#'>
+                Site Map
+              </List.Item>
+              <List.Item as='a' href='#'>
+                Contact Us
+              </List.Item>
+              <List.Item as='a' href='#'>
+                Terms and Conditions
+              </List.Item>
+              <List.Item as='a' href='#'>
+                Privacy Policy
+              </List.Item>
+            </List>
+          </Container>
+        </Segment>
       </div>
-    );
+    )
   }
 }
 
-//export default withAuthenticator(App, true);
 export default App;
