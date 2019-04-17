@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { BDiv, Form, Button, Alert, Row, Col, BA } from 'bootstrap-4-react';
 import { Auth, Logger } from 'aws-amplify';
+import { Button, Form, Segment } from 'semantic-ui-react'
 
 const logger = new Logger('JForgotPasswordReset');
 
@@ -26,8 +26,12 @@ export default class JForgotPasswordReset extends Component {
       this.setState({ error: 'missing username' });
       return;
     }
+    const { code, password, repassword } = this.inputs;
 
-    const { code, password } = this.inputs;
+    if (password !== repassword) {
+      this.setState({ error: 'repeat password error' });
+      return
+    }
     logger.info('reset password for ' + username);
     Auth.forgotPasswordSubmit(username, code, password)
       .then(data => this.submitSuccess(username, data))
@@ -59,35 +63,72 @@ export default class JForgotPasswordReset extends Component {
     const { error } = this.state;
 
     return (
-      <BDiv display="flex" flex="column" alignItems="center">
-        <Form style={style} preventDefault>
-          <Form.Input
-            type="text"
-            placeholder="Code"
-            rounded="top"
-            border="bottom-0"
-            style={style.input}
+      // <BDiv display="flex" flex="column" alignItems="center">
+      //   <Form style={style} preventDefault>
+      //     <Form.Input
+      //       type="text"
+      //       placeholder="Code"
+      //       rounded="top"
+      //       border="bottom-0"
+      //       style={style.input}
+      //       onChange={event => this.inputs.code = event.target.value}
+      //       autoFocus
+      //     />
+      //     <Form.Input
+      //       type="password"
+      //       placeholder="Password"
+      //       rounded="bottom"
+      //       style={style.input}
+      //       onChange={event => this.inputs.password = event.target.value}
+      //     />
+      //     <Row my="2" style={style.links}>
+      //       <Col text="left">
+      //         <BA href="#" preventDefault onClick={() => this.changeState('forgotPassword')}>
+      //           Back to forgot password
+      //         </BA>
+      //       </Col>
+      //     </Row>
+      //     <Button primary mt="3" style={style.button} onClick={this.submit}>Reset password</Button>
+      //     { error && <Alert warning mt="3" text="left" style={style.alert}>{error}</Alert> }
+      //   </Form>
+      // </BDiv>
+
+      <Form >
+        <Segment raised >
+          <Form.Input fluid icon='lock'
             onChange={event => this.inputs.code = event.target.value}
-            autoFocus
+            iconPosition='left'
+            placeholder='Code'
+            required />
+          <Form.Input
+            fluid
+            icon='lock'
+            iconPosition='left'
+            placeholder='Password'
+            type='password'
+            onChange={event => this.inputs.password = event.target.value}
+            required
           />
           <Form.Input
-            type="password"
-            placeholder="Password"
-            rounded="bottom"
-            style={style.input}
-            onChange={event => this.inputs.password = event.target.value}
+            fluid
+            icon='lock'
+            iconPosition='left'
+            placeholder='Password Confirm'
+            type='password'
+            onChange={event => this.inputs.repassword = event.target.value}
+            required
           />
-          <Row my="2" style={style.links}>
-            <Col text="left">
-              <BA href="#" preventDefault onClick={() => this.changeState('forgotPassword')}>
-                Back to forgot password
-              </BA>
-            </Col>
-          </Row>
-          <Button primary mt="3" style={style.button} onClick={this.submit}>Reset password</Button>
-          { error && <Alert warning mt="3" text="left" style={style.alert}>{error}</Alert> }
-        </Form>
-      </BDiv>
+          <Form.Field>
+            <a href="#" onClick={() => this.changeState('forgotPassword')}> Back to forgot password</a>
+          </Form.Field>
+          <Button color='teal'
+            fluid size='large'
+            onClick={this.submit}>
+            Reset password
+          </Button>
+          <p>{error}</p>
+        </Segment>
+      </Form>
     )
   }
 }

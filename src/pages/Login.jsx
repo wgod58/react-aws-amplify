@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import { Hub } from 'aws-amplify';
 import { Authenticator } from 'aws-amplify-react';
+import { Grid } from 'semantic-ui-react'
+
 import {
     JSignIn,
     JSignUp,
-    JConfirmSignUp
-
+    JConfirmSignUp,
+    JForgotPassword,
+    JForgotPasswordReset
 } from '../components/auth';
 
 const CustomAuthenticator = props => (
@@ -13,6 +16,8 @@ const CustomAuthenticator = props => (
         <JSignIn />
         <JSignUp />
         <JConfirmSignUp />
+        <JForgotPassword />
+        <JForgotPasswordReset />
     </Authenticator>
     // <Authenticator >
     // </Authenticator>
@@ -44,8 +49,12 @@ export default class Login extends Component {
             <React.Fragment>
                 {/* <JSignIn></JSignIn> */}
                 {/* {!user && <CustomAuthenticator />} */}
-                <CustomAuthenticator />
-                {user && <p>You are signed in as {user}.</p>}
+                <Grid textAlign='center' style={{ height: '100%' }} verticalAlign='middle'>
+                    <Grid.Column style={{ maxWidth: 450 }}>
+                        <CustomAuthenticator />
+                        {user && <p>You are signed in as {user}.</p>}
+                    </Grid.Column>
+                </Grid>
             </React.Fragment>
         )
     }

@@ -70,40 +70,38 @@ export default class JSignIn extends Component {
     if (!['signIn', 'signedOut', 'signedUp'].includes(authState)) { return null; }
     const { error } = this.state;
     return (
-      <Grid textAlign='center' style={{ height: '100%' }} verticalAlign='middle'>
-        <Grid.Column style={{ maxWidth: 450 }}>
-          <Form size='large'>
-            <Segment raised>
-              <Form.Input fluid icon='user'
-                onChange={event => this.inputs.username = event.target.value}
-                iconPosition='left'
-                defaultValue={authData || ''}
-                placeholder='User Name' required />
-              <Form.Input
-                fluid
-                onChange={event => this.inputs.password = event.target.value}
-                icon='lock'
-                iconPosition='left'
-                placeholder='Password'
-                type='password'
-                required
-              />
-              <Form.Field>
-                <a floated='right' href="#" onClick={() => this.changeState('forgotPassword')}>Forgot password</a>
-              </Form.Field>
-              <Button color='teal'
-                fluid size='large'
-                onClick={this.signIn}>
-                Login
+      <div>
+        <Form size='large'>
+          <Segment raised>
+            <Form.Input fluid icon='user'
+              onChange={event => this.inputs.username = event.target.value}
+              iconPosition='left'
+              defaultValue={authData || ''}
+              placeholder='User Name' required />
+            <Form.Input
+              fluid
+              onChange={event => this.inputs.password = event.target.value}
+              icon='lock'
+              iconPosition='left'
+              placeholder='Password'
+              type='password'
+              required
+            />
+            <Form.Field>
+              <a floated='right' href="#" onClick={() => this.changeState('forgotPassword')}>Forgot password</a>
+            </Form.Field>
+            <Button color='teal'
+              fluid size='large'
+              onClick={this.signIn}>
+              Login
               </Button>
-              <p>{error}</p>
-            </Segment>
-          </Form>
-          <Message>
-            New to us? <a href='#' onClick={() => this.changeState('signUp')}>Sign Up</a>
-          </Message>
-        </Grid.Column>
-      </Grid>
+            <p>{error}</p>
+          </Segment>
+        </Form>
+        <Message>
+          New to us? <a href='#' onClick={() => this.changeState('signUp')}>Sign Up</a>
+        </Message>
+      </div>
     )
   }
 }

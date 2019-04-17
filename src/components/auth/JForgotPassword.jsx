@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { BDiv, Form, Button, Alert, Row, Col, BA } from 'bootstrap-4-react';
 import { Auth, Logger } from 'aws-amplify';
+import { Button, Form, Segment } from 'semantic-ui-react'
+
 
 const logger = new Logger('JForgotPassword');
 
@@ -52,28 +53,46 @@ export default class JForgotPassword extends Component {
     const { error } = this.state;
 
     return (
-      <BDiv display="flex" flex="column" alignItems="center">
-        <Form style={style} preventDefault>
-          <Form.Input
-            type="text"
-            placeholder="Username"
-            defaultValue={authData || ''}
+      // <BDiv display="flex" flex="column" alignItems="center">
+      //   <Form style={style} preventDefault>
+      //     <Form.Input
+      //       type="text"
+      //       placeholder="Username"
+      //       defaultValue={authData || ''}
+      //       onChange={event => this.inputs.username = event.target.value}
+      //       autoFocus
+      //     />
+      //     <Row my="2" style={style.links}>
+      //       <Col text="left">
+      //         <BA href="#" preventDefault onClick={() => this.changeState('signIn')}>
+      //           Back to sign in
+      //         </BA>
+      //       </Col>
+      //       <Col text="right">
+      //       </Col>
+      //     </Row>
+      //     <Button primary mt="3" style={style.button} onClick={this.sendCode}>Send password reset code</Button>
+      //     { error && <Alert warning mt="3" text="left" style={style.alert}>{error}</Alert> }
+      //   </Form>
+      // </BDiv>
+
+      <Form >
+        <Segment raised >
+          <Form.Input fluid icon='user'
             onChange={event => this.inputs.username = event.target.value}
-            autoFocus
-          />
-          <Row my="2" style={style.links}>
-            <Col text="left">
-              <BA href="#" preventDefault onClick={() => this.changeState('signIn')}>
-                Back to sign in
-              </BA>
-            </Col>
-            <Col text="right">
-            </Col>
-          </Row>
-          <Button primary mt="3" style={style.button} onClick={this.sendCode}>Send password reset code</Button>
-          { error && <Alert warning mt="3" text="left" style={style.alert}>{error}</Alert> }
-        </Form>
-      </BDiv>
+            iconPosition='left'
+            placeholder='User Name' required />
+          <Form.Field>
+            <a href="#" onClick={() => this.changeState('signIn')}> Back to sign in</a>
+          </Form.Field>
+          <Button color='teal'
+            fluid size='large'
+            onClick={this.sendCode}>
+            Send password reset code
+          </Button>
+          <p>{error}</p>
+        </Segment>
+      </Form>
     )
   }
 }
