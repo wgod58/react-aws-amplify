@@ -51,48 +51,8 @@ export default class JForgotPasswordReset extends Component {
   render() {
     const { authState } = this.props;
     if (authState !== 'forgotPasswordReset') { return null; }
-
-    const style = {
-      width: '20rem',
-      input: { borderRadius: '0' },
-      links: { fontSize: '0.9em' },
-      button: { width: '100%' },
-      alert: { fontSize: '0.8em' }
-    }
-
     const { error } = this.state;
-
     return (
-      // <BDiv display="flex" flex="column" alignItems="center">
-      //   <Form style={style} preventDefault>
-      //     <Form.Input
-      //       type="text"
-      //       placeholder="Code"
-      //       rounded="top"
-      //       border="bottom-0"
-      //       style={style.input}
-      //       onChange={event => this.inputs.code = event.target.value}
-      //       autoFocus
-      //     />
-      //     <Form.Input
-      //       type="password"
-      //       placeholder="Password"
-      //       rounded="bottom"
-      //       style={style.input}
-      //       onChange={event => this.inputs.password = event.target.value}
-      //     />
-      //     <Row my="2" style={style.links}>
-      //       <Col text="left">
-      //         <BA href="#" preventDefault onClick={() => this.changeState('forgotPassword')}>
-      //           Back to forgot password
-      //         </BA>
-      //       </Col>
-      //     </Row>
-      //     <Button primary mt="3" style={style.button} onClick={this.submit}>Reset password</Button>
-      //     { error && <Alert warning mt="3" text="left" style={style.alert}>{error}</Alert> }
-      //   </Form>
-      // </BDiv>
-
       <Form >
         <Segment raised >
           <Form.Input fluid icon='lock'

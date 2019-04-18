@@ -29,9 +29,9 @@ export default class Login extends Component {
         this.state = { user: null }
         Hub.listen('auth', (data) => {
             const { payload } = data;
-            this.loadUser(payload.data.username,
+            this.loadUser(payload.data.username || payload.data.name,
                 payload.event);
-            //console.log(data)
+            console.log(data)
         })
     }
     loadUser = (user, event) => {

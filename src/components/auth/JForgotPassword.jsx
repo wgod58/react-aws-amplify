@@ -42,45 +42,14 @@ export default class JForgotPassword extends Component {
   render() {
     const { authState, authData } = this.props;
     if (authState !== 'forgotPassword') { return null; }
-
-    const style = {
-      width: '20rem',
-      links: { fontSize: '0.9em' },
-      button: { width: '100%' },
-      alert: { fontSize: '0.8em' }
-    }
-
     const { error } = this.state;
-
     return (
-      // <BDiv display="flex" flex="column" alignItems="center">
-      //   <Form style={style} preventDefault>
-      //     <Form.Input
-      //       type="text"
-      //       placeholder="Username"
-      //       defaultValue={authData || ''}
-      //       onChange={event => this.inputs.username = event.target.value}
-      //       autoFocus
-      //     />
-      //     <Row my="2" style={style.links}>
-      //       <Col text="left">
-      //         <BA href="#" preventDefault onClick={() => this.changeState('signIn')}>
-      //           Back to sign in
-      //         </BA>
-      //       </Col>
-      //       <Col text="right">
-      //       </Col>
-      //     </Row>
-      //     <Button primary mt="3" style={style.button} onClick={this.sendCode}>Send password reset code</Button>
-      //     { error && <Alert warning mt="3" text="left" style={style.alert}>{error}</Alert> }
-      //   </Form>
-      // </BDiv>
-
       <Form >
         <Segment raised >
           <Form.Input fluid icon='user'
             onChange={event => this.inputs.username = event.target.value}
             iconPosition='left'
+            defaultValue={authData || ''}
             placeholder='User Name' required />
           <Form.Field>
             <a href="#" onClick={() => this.changeState('signIn')}> Back to sign in</a>
