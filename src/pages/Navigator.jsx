@@ -21,25 +21,6 @@ class Navigator extends Component {
             <Image size='mini' src={logo} style={{ marginRight: '1.5em' }} />
             Project Name
             </Menu.Item>
-          <Menu.Item as='a'>Home</Menu.Item>
-
-          <Dropdown item simple text='Dropdown'>
-            <Dropdown.Menu>
-              <Dropdown.Item>List Item</Dropdown.Item>
-              <Dropdown.Item>List Item</Dropdown.Item>
-              <Dropdown.Divider />
-              <Dropdown.Header>Header Item</Dropdown.Header>
-              <Dropdown.Item>
-                <i className='dropdown icon' />
-                <span className='text'>Submenu</span>
-                <Dropdown.Menu>
-                  <Dropdown.Item>List Item</Dropdown.Item>
-                  <Dropdown.Item>List Item</Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown.Item>
-              <Dropdown.Item>List Item</Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
           <Menu.Menu position='right'>
             <Menu.Item
               as='a'
