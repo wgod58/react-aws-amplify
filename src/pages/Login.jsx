@@ -13,7 +13,7 @@ import {
 
 const CustomAuthenticator = props => (
     <Authenticator hideDefault>
-        <JSignIn />
+        <JSignIn setUser={props.setUser} />
         <JSignUp />
         <JConfirmSignUp />
         <JForgotPassword />
@@ -35,12 +35,15 @@ export default class Login extends Component {
         })
     }
     loadUser = (user, event) => {
-        console.log(user + event)
+        //console.log(user + event)
         if ('signOut' === event) {
             this.setState({ user: null });
             return;
         }
-        this.setState({ user: user })
+        this.setState({ user })
+    }
+    setUser = (user) => {
+        this.setState({ user })
     }
     render() {
         const user = this.state.user;
@@ -51,7 +54,7 @@ export default class Login extends Component {
                 {/* {!user && <CustomAuthenticator />} */}
                 <Grid textAlign='center' style={{ height: '100%' }} verticalAlign='middle'>
                     <Grid.Column style={{ maxWidth: 450 }}>
-                        <CustomAuthenticator />
+                        <CustomAuthenticator setUser={this.setUser} />
                         {user && <p>You are signed in as {user}.</p>}
                     </Grid.Column>
                 </Grid>

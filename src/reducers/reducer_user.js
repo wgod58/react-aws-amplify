@@ -1,5 +1,5 @@
 export default function () {
   return (
-    { account: null, pwd: null, email: null, phone: null }
+    { user: 'a', email: 'null@asd.com', phone: '09274567' }
   );
 }

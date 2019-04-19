@@ -2,17 +2,36 @@ import React, { Component } from 'react';
 import { Auth, Logger, JS } from 'aws-amplify';
 import { Button, Form, Message, Segment } from 'semantic-ui-react'
 import { withFederated } from 'aws-amplify-react';
+import JFBSignIn from './JFBSignIn';
+
 const logger = new Logger('JSignIn');
 
 const FederatedButtons = (props) => (
   <Button
     secondary
     style={{ width: '100%' }}
-    onClick={props.facebookSignIn}
+    onClick={() => {
+      try {
+        test(props)();
+      } catch (error) {
+        console.log('---err---');
+      }
+    }
+    }
   >
     Facebook
-  </Button>
+  </Button >
 );
+
+const test = function (props) {
+  var data = null;
+  try {
+    data = props.facebookSignIn;
+  } catch (error) {
+    console.log(error)
+  }
+  return data
+}
 
 const Federated = withFederated(FederatedButtons);
 
@@ -114,6 +133,7 @@ export default class JSignIn extends Component {
               Login
             </Button>
             <Federated federated={federated_data} onStateChange={this.changeState} />
+            <JFBSignIn setUser={this.props.setUser} />
             <p>{error}</p>
           </Segment>
         </Form>
