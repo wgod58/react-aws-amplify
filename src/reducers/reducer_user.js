@@ -1,5 +1,10 @@
-export default function () {
-  return (
-    { user: 'a', email: 'null@asd.com', phone: '09274567' }
-  );
+import { SET_USER } from '../actions/index';
+
+export default function (state = { name: null, email: null }, action) {
+  switch (action.type) {
+    case SET_USER:
+      return action.user;
+    default:
+      return state;
+  }
 }

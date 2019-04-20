@@ -7,7 +7,7 @@ import {
   List,
   Segment,
 } from 'semantic-ui-react'
-import Amplify, { Auth } from 'aws-amplify';
+import Amplify from 'aws-amplify';
 
 import aws_exports from './aws-exports';
 
@@ -19,41 +19,6 @@ class App extends Component {
     this.state = { term: '', array: ['default'], activeItem: 'home' };
   }
 
-  async componentDidMount() {
-    this.loadFacebookSDK();
-
-    try {
-      //console.log(await Auth.currentUserInfo());
-      console.log(await Auth.currentCredentials());
-      //console.log(await Auth.currentSession());
-      //console.log(await Auth.currentUserPoolUser());
-      var x = await Auth.currentAuthenticatedUser();
-      console.log(x);
-    } catch (e) {
-      if (e !== "not authenticated") {
-        alert(e);
-      }
-    }
-  }
-
-  loadFacebookSDK() {
-    window.fbAsyncInit = function () {
-      window.FB.init({
-        appId: '290214535234751',
-        autoLogAppEvents: true,
-        xfbml: true,
-        version: 'v3.1'
-      });
-    };
-
-    (function (d, s, id) {
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) { return; }
-      js = d.createElement(s); js.id = id;
-      js.src = "https://connect.facebook.net/en_US/sdk.js";
-      fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-  }
 
 
   render() {

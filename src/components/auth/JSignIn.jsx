@@ -2,36 +2,21 @@ import React, { Component } from 'react';
 import { Auth, Logger, JS } from 'aws-amplify';
 import { Button, Form, Message, Segment } from 'semantic-ui-react'
 import { withFederated } from 'aws-amplify-react';
+import { connect } from 'react-redux';
+import { setUser } from '../../actions/index';
+import { bindActionCreators } from 'redux';
 import JFBSignIn from './JFBSignIn';
 
 const logger = new Logger('JSignIn');
-
 const FederatedButtons = (props) => (
   <Button
     secondary
     style={{ width: '100%' }}
-    onClick={() => {
-      try {
-        test(props)();
-      } catch (error) {
-        console.log('---err---');
-      }
-    }
-    }
+    onClick={props.facebookSignIn}
   >
     Facebook
-  </Button >
+  </Button>
 );
-
-const test = function (props) {
-  var data = null;
-  try {
-    data = props.facebookSignIn;
-  } catch (error) {
-    console.log(error)
-  }
-  return data
-}
 
 const Federated = withFederated(FederatedButtons);
 
@@ -41,12 +26,30 @@ const federated_data = {
   amazon_client_id: ''
 };
 
-export default class JSignIn extends Component {
+class JSignIn extends Component {
   constructor(props) {
     super(props);
     this.inputs = {};
     this.state = { error: '' }
   }
+  async componentDidMount() {
+
+    try {
+      //console.log(await Auth.currentUserInfo());
+      console.log(await Auth.currentCredentials());
+      //console.log(await Auth.currentSession());
+      //console.log(await Auth.currentUserPoolUser());
+      var x = await Auth.currentAuthenticatedUser();
+      console.log(x);
+      Auth.signOut();
+    } catch (e) {
+      console.log(e)
+      if (e !== "not authenticated") {
+        alert(e);
+      }
+    }
+  }
+
 
 
   signIn = () => {
@@ -59,7 +62,8 @@ export default class JSignIn extends Component {
   }
 
   signInSuccess(user) {
-    logger.info('sign in success', user);
+    // logger.info('sign in success', user);
+    console.log('sign in success', user);
     //console.log('sign in succeeceeeecece', user);
     this.setState({ error: '' });
 
@@ -69,6 +73,7 @@ export default class JSignIn extends Component {
       this.changeState('confirmSignIn', user);
     } else {
       this.checkContact(user);
+      // this.props.setUser({name:user,email})
     }
   }
 
@@ -95,6 +100,7 @@ export default class JSignIn extends Component {
         console.log('data:   ', data)
         if (!JS.isEmpty(data.verified)) {
           this.changeState('signedIn', user);
+          this.props.setUser({ name: user.username, email: user.attributes.email })
         } else {
           user = Object.assign(user, data);
           this.changeState('verifyContact', user);
@@ -132,7 +138,7 @@ export default class JSignIn extends Component {
               onClick={this.signIn}>
               Login
             </Button>
-            <Federated federated={federated_data} onStateChange={this.changeState} />
+            {/* <Federated federated={federated_data} onStateChange={this.changeState} /> */}
             <JFBSignIn setUser={this.props.setUser} />
             <p>{error}</p>
           </Segment>
@@ -144,3 +150,9 @@ export default class JSignIn extends Component {
     )
   }
 }
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ setUser }, dispatch);
+}
+
+export default connect(null, mapDispatchToProps)(JSignIn);

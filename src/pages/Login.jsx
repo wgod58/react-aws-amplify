@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Hub } from 'aws-amplify';
 import { Authenticator } from 'aws-amplify-react';
 import { Grid } from 'semantic-ui-react'
+import { connect } from 'react-redux';
 
 import {
     JSignIn,
@@ -13,20 +14,17 @@ import {
 
 const CustomAuthenticator = props => (
     <Authenticator hideDefault>
-        <JSignIn setUser={props.setUser} />
+        <JSignIn />
         <JSignUp />
         <JConfirmSignUp />
         <JForgotPassword />
         <JForgotPasswordReset />
     </Authenticator>
-    // <Authenticator >
-    // </Authenticator>
 )
 
-export default class Login extends Component {
+class Login extends Component {
     constructor() {
         super();
-        this.state = { user: null }
         Hub.listen('auth', (data) => {
             const { payload } = data;
             this.loadUser(payload.data.username || payload.data.name,
@@ -42,23 +40,28 @@ export default class Login extends Component {
         }
         this.setState({ user })
     }
-    setUser = (user) => {
-        this.setState({ user })
-    }
+    // setUser = (user) => {
+    //     this.setState({ user })
+    // }
     render() {
-        const user = this.state.user;
+        const user = this.props.user;
 
         return (
             <React.Fragment>
-                {/* <JSignIn></JSignIn> */}
-                {/* {!user && <CustomAuthenticator />} */}
                 <Grid textAlign='center' style={{ height: '100%' }} verticalAlign='middle'>
                     <Grid.Column style={{ maxWidth: 450 }}>
-                        <CustomAuthenticator setUser={this.setUser} />
-                        {user && <p>You are signed in as {user}.</p>}
+                        {!(user.name || user.email) && <CustomAuthenticator />}
+                        {user.name && <p>You are signed in as {user.name}.</p>}
+                        {user.email && <p>You are signed in as {user.email}.</p>}
                     </Grid.Column>
                 </Grid>
             </React.Fragment>
         )
     }
 }
+function mapStateToProps(state) {
+    return {
+        user: state.user
+    };
+}
+export default connect(mapStateToProps)(Login);
