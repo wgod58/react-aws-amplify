@@ -120,7 +120,7 @@ class JSignIn extends Component {
               onChange={event => this.inputs.username = event.target.value}
               iconPosition='left'
               defaultValue={authData || ''}
-              placeholder='User Name' required />
+              placeholder='User Name' />
             <Form.Input
               fluid
               onChange={event => this.inputs.password = event.target.value}
@@ -128,7 +128,6 @@ class JSignIn extends Component {
               iconPosition='left'
               placeholder='Password'
               type='password'
-              required
             />
             <Form.Field>
               <a href="#" onClick={() => this.changeState('forgotPassword')}>Forgot password</a>
