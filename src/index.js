@@ -8,8 +8,8 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import { BrowserRouter as Router } from "react-router-dom";
 import ReduxPromise from 'redux-promise';
-
 import reducers from './reducers';
+import { initializeFirebase } from './push-notification';
 
 const createStoreWithMiddleware = applyMiddleware(ReduxPromise)(createStore);
 
@@ -27,3 +27,4 @@ ReactDOM.render(
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.register();
+initializeFirebase(); 

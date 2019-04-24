@@ -3,11 +3,7 @@ import {
   Container
 } from 'semantic-ui-react'
 import { Route, Link } from "react-router-dom";
-import { Login } from '.';
-
-function Index() {
-  return <h2>Home</h2>;
-}
+import { Login, Home } from '.';
 
 function About() {
   return <h2>About</h2>;
@@ -38,7 +34,7 @@ export default class Main extends Component {
           </ul>
         </nav>
         <div>
-          <Route path="/" exact component={Index} />
+          <Route path="/" exact component={Home} />
           <Route path="/about/" component={About} />
           <Route path="/users/" component={Users} />
           <Route path="/Login/" component={Login} />
