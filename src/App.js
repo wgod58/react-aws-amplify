@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Navigator, Main } from './pages';
 import logo from './logo.svg';
+// import './App.css';
 import {
   Container,
   Image,

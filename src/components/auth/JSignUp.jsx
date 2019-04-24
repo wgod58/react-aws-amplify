@@ -117,7 +117,7 @@ export default class JSignUp extends Component {
             <Grid.Column floated='left' width={5}>
               <a href="#" onClick={() => this.changeState('signIn')}>
                 Back to sign in
-                </a>
+              </a>
             </Grid.Column>
             <Grid.Column textAlign='right' floated='right' width={5}>
               <a href="#" onClick={() => this.changeState('confirmSignUp')}>

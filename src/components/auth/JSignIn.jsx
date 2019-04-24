@@ -35,10 +35,7 @@ class JSignIn extends Component {
   async componentDidMount() {
 
     try {
-      //console.log(await Auth.currentUserInfo());
       console.log(await Auth.currentCredentials());
-      //console.log(await Auth.currentSession());
-      //console.log(await Auth.currentUserPoolUser());
       var x = await Auth.currentAuthenticatedUser();
       console.log(x);
       Auth.signOut();
@@ -49,8 +46,6 @@ class JSignIn extends Component {
       }
     }
   }
-
-
 
   signIn = () => {
     const { username, password } = this.inputs;
@@ -143,7 +138,14 @@ class JSignIn extends Component {
           </Segment>
         </Form>
         <Message>
-          New to us? <a href='#' onClick={() => this.changeState('signUp')}>Sign Up</a>
+          New to us?
+          {/* <button
+            type="button"
+            className="link-button"
+            onClick={() => this.changeState('signUp')}>
+            Sign Up
+          </button> */}
+          <a href='#' onClick={() => this.changeState('signUp')}>Sign Up</a>
         </Message>
       </div>
     )

@@ -4,7 +4,6 @@ import JSignOut from '../components/auth/JSignOut'
 import { BrowserRouter as Link, withRouter } from "react-router-dom";
 import {
   Container,
-  Dropdown,
   Image,
   Menu
 } from 'semantic-ui-react'
