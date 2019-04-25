@@ -12,7 +12,7 @@ const awsmobile = {
     "aws_cloud_logic_custom": [
         {
             "name": "notification",
-            "endpoint": "https://n1vsy7xx99.execute-api.eu-west-1.amazonaws.com/master",
+            "endpoint": "https://c3znmumz5c.execute-api.eu-west-1.amazonaws.com/master",
             "region": "eu-west-1"
         }
     ]
