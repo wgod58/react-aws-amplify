@@ -4,8 +4,7 @@
             "name": "/api/noti",
             "lambdaFunction": "notification",
             "privacy": {
-                "private": true,
-                "auth": "r"
+                "open": true
             }
         }
     ],
@@ -17,7 +16,7 @@
         }
     ],
     "privacy": {
-        "auth": 1,
+        "auth": 0,
         "unauth": 0,
         "authRoleName": "my-app-20190415165209-authRole",
         "unAuthRoleName": "my-app-20190415165209-unauthRole"

@@ -60,7 +60,7 @@
 				"Timeout": "25",
 				"Code": {
 					"S3Bucket": "my-app-20190415165209-deployment",
-					"S3Key": "amplify-builds/notification-1556175406-latest-build.zip"
+					"S3Key": "amplify-builds/notification-1556186728-latest-build.zip"
 				}
 			}
 		},
@@ -70,12 +70,12 @@
 				"RoleName": {
 					"Fn::If": [
 						"ShouldNotCreateEnvResources",
-						"myappLambdaRole02aab892",
+						"myappLambdaRoleab60ea00",
 						{
 							"Fn::Join": [
 								"",
 								[
-									"myappLambdaRole02aab892",
+									"myappLambdaRoleab60ea00",
 									"-",
 									{
 										"Ref": "env"

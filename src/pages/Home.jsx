@@ -26,7 +26,7 @@ class Home extends Component {
         return (
             <div>
                 <header className="App-header">
-                    <h1 className="App-title">Welcome to the push-notification demo !</h1>
+                    <h1 className="App-title">Welcome to the push-notification demo V3!</h1>
                 </header>
                 <Button onClick={this.PermissioToReceiveNotifications}>
                     Click here to receive notifications
