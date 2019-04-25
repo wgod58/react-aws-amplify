@@ -1,0 +1,35 @@
+{
+    "paths": [
+        {
+            "name": "/api/noti",
+            "lambdaFunction": "notification",
+            "privacy": {
+                "private": true,
+                "auth": "r"
+            }
+        }
+    ],
+    "resourceName": "notification",
+    "apiName": "notification",
+    "functionArns": [
+        {
+            "lambdaFunction": "notification"
+        }
+    ],
+    "privacy": {
+        "auth": 1,
+        "unauth": 0,
+        "authRoleName": "my-app-20190415165209-authRole",
+        "unAuthRoleName": "my-app-20190415165209-unauthRole"
+    },
+    "dependsOn": [
+        {
+            "category": "function",
+            "resourceName": "notification",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
+        }
+    ]
+}
