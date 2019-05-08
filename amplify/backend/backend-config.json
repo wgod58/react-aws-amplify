@@ -1,6 +1,6 @@
 {
 	"auth": {
-		"cognitoe3a6bb6a": {
+		"cognito72271784": {
 			"service": "Cognito",
 			"providerPlugin": "awscloudformation"
 		}
@@ -11,28 +11,6 @@
 			"providerPlugin": "awscloudformation"
 		}
 	},
-	"function": {
-		"notification": {
-			"service": "Lambda",
-			"providerPlugin": "awscloudformation",
-			"build": true,
-			"dependsOn": []
-		}
-	},
-	"api": {
-		"notification": {
-			"service": "API Gateway",
-			"providerPlugin": "awscloudformation",
-			"dependsOn": [
-				{
-					"category": "function",
-					"resourceName": "notification",
-					"attributes": [
-						"Name",
-						"Arn"
-					]
-				}
-			]
-		}
-	}
+	"function": {},
+	"api": {}
 }

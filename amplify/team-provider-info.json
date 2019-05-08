@@ -12,7 +12,10 @@
         },
         "categories": {
             "auth": {
-                "cognitoe3a6bb6a": {}
+                "cognito72271784": {
+                    "facebookAppId": "290214535234751",
+                    "googleClientId": "123"
+                }
             }
         }
     }

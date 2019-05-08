@@ -2,20 +2,13 @@
 
 const awsmobile = {
     "aws_project_region": "eu-west-1",
-    "aws_cognito_identity_pool_id": "eu-west-1:524c5ed9-a26b-4933-8b23-3116d3476a09",
+    "aws_cognito_identity_pool_id": "eu-west-1:c0210014-5d20-4124-8554-05a517b363e9",
     "aws_cognito_region": "eu-west-1",
-    "aws_user_pools_id": "eu-west-1_DIwIzuXwn",
-    "aws_user_pools_web_client_id": "6nnbtekks8uvkpprmtcnudf40b",
-    "aws_content_delivery_bucket": "test.fabryque.com-master",
+    "aws_user_pools_id": "eu-west-1_f42fqtI7U",
+    "aws_user_pools_web_client_id": "ib16k7s5k4m4u78b9oihuoa6l",
+    "aws_content_delivery_bucket": "my-app-20190508154800-hostingbucket-master",
     "aws_content_delivery_bucket_region": "eu-west-1",
-    "aws_content_delivery_url": "https://dl5absvvfud7x.cloudfront.net",
-    "aws_cloud_logic_custom": [
-        {
-            "name": "notification",
-            "endpoint": "https://c3znmumz5c.execute-api.eu-west-1.amazonaws.com/master",
-            "region": "eu-west-1"
-        }
-    ]
+    "aws_content_delivery_url": "http://my-app-20190508154800-hostingbucket-master.s3-website-eu-west-1.amazonaws.com"
 };
 
 

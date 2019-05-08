@@ -19,25 +19,72 @@ export default class JSignUp extends Component {
     }
   }
 
-  signUp() {
-    const { username, password, repassword, email, phone_number } = this.inputs;
-    if (password !== repassword) {
-      this.setState({ error: 'repeat password error' });
-      return
+  async signUp() {
+    try {
+      const { password, repassword, email, birthDate, gender, height, weight } = this.inputs;
+      if (password !== repassword) {
+        this.setState({ error: 'repeat password error' });
+        return
+      }
+      if (!password || !email || !birthDate || !gender || !height || !weight)
+        return
+      logger.info('sign up with email' + email);
+      await Auth.signUp({
+        username: email,
+        password,
+        attributes: {
+          email,      // optional
+          birthdate: birthDate,
+          gender
+        }
+      })
+      let createUserResult = await fetch(`${process.env.REACT_APP_USER_MANAGEMENT_API_URL}create-user`, {
+        method: "POST",
+        headers: {
+          Accept: "application/x-www-form-urlencoded",
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: JSON.stringify({
+          emailId: email,
+          birthDate: birthDate,
+          password: password,
+          gender: gender,
+          height: height,
+          weight: weight
+        })
+      })
+      let createUserResultJson = await createUserResult.json()
+      if (createUserResultJson.status !== 200)
+        throw new Error('createUserResult Error');
+      let registerEmailResult = await fetch(
+        `${process.env.REACT_APP_THIRD_PARTY_MANAGEMENT_API_URL}register-email`,
+        {
+          method: "POST",
+          headers: {
+            Accept: "application/x-www-form-urlencoded",
+            "Content-Type": "application/x-www-form-urlencoded"
+          },
+          body: JSON.stringify({
+            email: createUserResultJson.data.uuid,
+            password: createUserResultJson.data.uuid
+          })
+        }
+      )
+      let registerEmailResultJson = await registerEmailResult.json()
+      if (registerEmailResultJson.status !== 200)
+        throw new Error('registerEmailResult Error');
+      this.signUpSuccess(email)
+    } catch (error) {
+      this.signUpError(error)
     }
-    if (!username || !password || !email || !phone_number)
-      return
-    logger.info('sign up with ' + username);
-    Auth.signUp(username, password, email, phone_number)
-      .then(() => this.signUpSuccess(username))
-      .catch(err => this.signUpError(err));
+
   }
 
-  signUpSuccess(username) {
-    logger.info('sign up success with ' + username);
+  signUpSuccess(email) {
+    logger.info('sign up success with ' + email);
     this.setState({ error: '' });
 
-    this.changeState('confirmSignUp', username);
+    this.changeState('confirmSignUp', email);
   }
 
   signUpError(err) {
@@ -51,6 +98,10 @@ export default class JSignUp extends Component {
   }
 
   render() {
+    const options = [
+      { key: 'm', text: 'Male', value: 'male' },
+      { key: 'f', text: 'Female', value: 'female' },
+    ]
     const { authState } = this.props;
     if (authState !== 'signUp') { return null; }
 
@@ -67,12 +118,15 @@ export default class JSignUp extends Component {
     return (
       <Form >
         <Segment raised>
-          <Form.Input fluid
-            icon='user'
+          <Form.Input
+            fluid
+            icon='mail outline'
             iconPosition='left'
-            placeholder='User name'
-            onChange={event => this.inputs.username = event.target.value}
-            required />
+            type="email"
+            placeholder="Email address"
+            onChange={event => this.inputs.email = event.target.value}
+            required
+          />
           <Form.Input
             fluid
             icon='lock'
@@ -91,24 +145,40 @@ export default class JSignUp extends Component {
             onChange={event => this.inputs.repassword = event.target.value}
             required
           />
+          <select id="lang"
+            onChange={event => {
+              // console.log(event.target.value);
+              this.inputs.gender = event.target.value
+              console.log(this.inputs.gender)
+            }}
+            placeholder='Gender'
+            value={this.inputs.gender}>
+            <option value="">Gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+          {/* <p>{this.inputs.gender}</p> */}
           <Form.Input
             fluid
-            icon='mail outline'
-            iconPosition='left'
-            type="email"
-            placeholder="Email address"
-            onChange={event => this.inputs.email = event.target.value}
-            required
-          ></Form.Input>
-          <Form.Input
-            fluid
-            icon='phone'
-            iconPosition='left'
             type="tel"
-            placeholder="Phone number"
-            onChange={event => this.inputs.phone_number = event.target.value}
+            placeholder="Height"
+            onChange={event => this.inputs.height = event.target.value}
             required
           ></Form.Input>
+          <Form.Input
+            fluid
+            type="tel"
+            placeholder="Weight"
+            onChange={event => this.inputs.weight = event.target.value}
+            required
+          ></Form.Input>
+          <label> BirthDate</label>
+          <input
+            type="date"
+            name="bday"
+            onChange={event => (this.inputs.birthDate = event.target.value)}
+            placeholder='BirthDate'>
+          </input>
           <Button color='teal' fluid size='large'
             onClick={this.signUp}>
             Create Account

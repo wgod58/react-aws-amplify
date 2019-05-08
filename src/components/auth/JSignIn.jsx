@@ -48,10 +48,10 @@ class JSignIn extends Component {
   }
 
   signIn = () => {
-    const { username, password } = this.inputs;
-    if (!username || !password)
+    const { email, password } = this.inputs;
+    if (!email || !password)
       return
-    Auth.signIn(username, password)
+    Auth.signIn(email, password)
       .then(user => this.signInSuccess(user))
       .catch(err => this.signInError(err));
   }
@@ -111,18 +111,27 @@ class JSignIn extends Component {
       <div>
         <Form size='large'>
           <Segment raised>
-            <Form.Input fluid icon='user'
+            {/* <Form.Input fluid icon='user'
               onChange={event => this.inputs.username = event.target.value}
               iconPosition='left'
               defaultValue={authData || ''}
-              placeholder='User Name' />
+              placeholder='User Name' /> */}
             <Form.Input
               fluid
-              onChange={event => this.inputs.password = event.target.value}
+              icon='mail outline'
+              iconPosition='left'
+              type="email"
+              defaultValue={authData || ''}
+              onChange={event => this.inputs.email = event.target.value}
+              placeholder="Email address"
+            ></Form.Input>
+            <Form.Input
+              fluid
               icon='lock'
               iconPosition='left'
-              placeholder='Password'
               type='password'
+              onChange={event => this.inputs.password = event.target.value}
+              placeholder='Password'
             />
             <Form.Field>
               <a href="#" onClick={() => this.changeState('forgotPassword')}>Forgot password</a>

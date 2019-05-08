@@ -52,7 +52,7 @@ export default class FacebookButton extends Component {
     // console.log('statusChangeCallback', response)
     if (response.status === "connected") {
       self.handleResponse(response.authResponse);
-      self.setUser();
+      //self.setUser();
     } else {
       self.handleError(response);
     }
@@ -87,17 +87,19 @@ export default class FacebookButton extends Component {
     console.log('data888888888******', data);
     const { email, accessToken: token, expiresIn } = data;
     const expires_at = expiresIn * 1000 + new Date().getTime();
-    const user = { email };
+    const fb = window.FB;
+    fb.api('/me', { fields: 'name,email' }, response => {
+      this.props.setUser({ name: response.name, email: response.email })
+      const user = {
+        name: response.name,
+        email: response.email
+      };
 
-    try {
-      const response = await Auth.federatedSignIn(
-        "facebook",
-        { token, expires_at },
-        user
-      );
-    } catch (e) {
-      this.handleError(e);
-    }
+      Auth.federatedSignIn('facebook', { token, expires_at }, user)
+        .then(credentials => {
+          console.log(credentials);
+        });
+    });
   }
 
   render() {
