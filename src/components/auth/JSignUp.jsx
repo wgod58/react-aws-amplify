@@ -54,30 +54,30 @@ export default class JSignUp extends Component {
         })
       })
       let createUserResultJson = await createUserResult.json()
-      if (createUserResultJson.status !== 200)
-        throw new Error('createUserResult Error');
-      let registerEmailResult = await fetch(
-        `${process.env.REACT_APP_THIRD_PARTY_MANAGEMENT_API_URL}register-email`,
-        {
-          method: "POST",
-          headers: {
-            Accept: "application/x-www-form-urlencoded",
-            "Content-Type": "application/x-www-form-urlencoded"
-          },
-          body: JSON.stringify({
-            email: createUserResultJson.data.uuid,
-            password: createUserResultJson.data.uuid
-          })
-        }
-      )
-      let registerEmailResultJson = await registerEmailResult.json()
-      if (registerEmailResultJson.status !== 200)
-        throw new Error('registerEmailResult Error');
+      if (createUserResultJson.status == 200) {
+        //  throw new Error('createUserResult Error');
+        let registerEmailResult = await fetch(
+          `${process.env.REACT_APP_THIRD_PARTY_MANAGEMENT_API_URL}register-email`,
+          {
+            method: "POST",
+            headers: {
+              Accept: "application/x-www-form-urlencoded",
+              "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: JSON.stringify({
+              email: createUserResultJson.data.uuid,
+              password: createUserResultJson.data.uuid
+            })
+          }
+        )
+        let registerEmailResultJson = await registerEmailResult.json()
+        if (registerEmailResultJson.status !== 200)
+          throw new Error('registerEmailResult Error');
+      }
       this.signUpSuccess(email)
     } catch (error) {
       this.signUpError(error)
     }
-
   }
 
   signUpSuccess(email) {
